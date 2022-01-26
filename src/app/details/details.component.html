@@ -1,0 +1,78 @@
+<main>
+    <!-- MOVIE DETAILS -->
+  <div class="movie_details">
+    <img
+      [src]="'https://image.tmdb.org/t/p/w500/' + movieObj.poster_path"
+      alt=""
+      class="poster_img"
+    />
+    <div class="description">
+      <h2 class="movie_title">{{ movieObj.original_title }}</h2>
+      <div class="line-1">
+        <div class="genre_year">
+          <div
+            class="genres"
+            *ngFor="let genre of movieObj.genres; let i = index"
+          >
+            <p *ngIf="i == 1 || i == 2">{{ genre.name }} |</p>
+          </div>
+          <div>
+            <p>{{ movieObj.release_date | date: "YYYY" }}</p>
+          </div>
+        </div>
+        <div class="runtime">
+          <p>{{ movieObj.runtime }} min</p>
+          <p>CC</p>
+        </div>
+      </div>
+      <div class="line-2">
+        <ng-rating-bar
+          [value]="movieObj.vote_average / 2"
+          [ratingCount]="5"
+          [disabled]="true"
+          [styles]="{ fontSize: '25px', margin: '5px' }"
+        ></ng-rating-bar>
+        <span>({{ movieObj.vote_count | number: "2." }})</span>
+      </div>
+      <div class="line-3">
+        <p class="trailer">Trailer</p>
+        <p class="list">List</p>
+        <p class="redeem">Redeem</p>
+      </div>
+      <div class="line-4">
+        <p [ngClass]="{ more: btnText == 'More' }">{{ movieObj.overview }}</p>
+        <span (click)="more()" class="more-btn">{{ btnText }}</span>
+      </div>
+      <div class="buttons">
+        <button>Rent $3.99 <i class="fas fa-caret-down"></i></button>
+        <button>Buy $4.99 <i class="fas fa-caret-down"></i></button>
+      </div>
+    </div>
+    <div class="backdrop_img">
+      <img
+        [src]="'https://image.tmdb.org/t/p/w500/' + movieObj.backdrop_path"
+        alt=""
+      />
+    </div>
+  </div>
+  <hr class="hr"/>
+
+  <!-- CAST & CREW -->
+  <h2 class="cast_title">Cast & Crew</h2>
+    <div class="slider">
+        <div class="top_slider"> 
+            <div (click)="prev()" class="prev_btn"><i class="fas fa-arrow-left"></i></div>
+            <div (click)="next()" class="next_btn"><i class="fas fa-arrow-right"></i></div>
+        </div>
+        <div class="cast">
+            <div *ngFor="let cast of castAndCrewObj.cast" class="single_cast">
+            
+                    <img [src]="'https://image.tmdb.org/t/p/w500/' + cast.profile_path" alt="">
+                    <h4 class="name-1">{{cast.original_name}}</h4>
+                    <p class="name-2">{{cast.character}}</p>
+                
+            </div>
+        </div>
+    </div>
+
+</main>

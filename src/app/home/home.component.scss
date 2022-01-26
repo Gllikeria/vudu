@@ -1,0 +1,126 @@
+.home-nav{
+    width: 77%;
+    margin: 20px auto;
+    .filter-btn {
+        background-color:rgba(40,156,127,255);
+        border: none;
+        margin-right: 1%;
+        i {
+            margin-left: 5px;
+            position: relative;
+            top: -2px;
+           
+        }
+    }
+}
+.filter{
+    width: 65%;
+    margin: 20px auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    text-align: center;
+    border: 2px solid rgb(33, 163, 214);
+    border-radius: 10px;
+    div{
+        height: 40px;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: transparent;
+        &:hover {
+            background-color: rgb(33, 163, 214);
+        }
+        &:active{
+            background-color: rgb(33, 163, 214);
+        }
+        &:last-child{
+            border-left: 2px solid rgb(33, 163, 214);
+        }
+        &:first-child{
+            border-right: 2px solid rgb(33, 163, 214);
+        }
+    }
+}
+.main-container{
+    width: 75%;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    margin: 0 auto;
+    gap: 10px;
+    img{
+        height: 300px;
+        width: 100%;
+        object-fit: cover;
+
+        cursor: pointer;
+        &:hover{
+            // border: 10px solid red;
+        }
+    }
+}
+.search-container{
+    width: 60%;
+    margin: 20px auto;
+    button {
+        color: #fff;
+        background-color:rgb(33, 163, 214);
+    }
+}
+.no-movie{
+    color: #fff;
+    display: inline-block;
+    margin-top: 5%;
+    width: 100%;
+    text-align: center;
+}
+#checkb {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    color:black;
+    -webkit-appearance: none;
+    border: 2px solid rgba(40,156,127,255);
+    position: relative;
+    margin-right: 10px;
+    margin-left: 20px;
+    top: 1px;
+}
+
+#checkb:checked {
+    background: rgba(40,156,127,255);
+}
+.checkbox-container {
+    padding-top: 7px;
+    position: absolute;
+    display: inline-block;
+}
+hr{
+    color: rgb(33, 163, 214);
+}
+.active{
+    background-color: rgb(33, 163, 214) !important;
+}
+.circle-1{
+    width: 600px;
+    height: 600px;
+    // background-color: #123751;
+    position: absolute;
+    border-radius: 50%;
+    bottom: -150px;
+    left: -100px;
+    z-index: 0;
+    background: radial-gradient(#0d3046, #123751);
+}
+.circle-2{
+    width: 800px;
+    height: 800px;
+    // background-color: #123751;
+    position: absolute;
+    border-radius: 50%;
+    bottom: -50px;
+    right: -200px;
+    z-index: 0;
+    background: radial-gradient(#123948, #0c2132);
+}

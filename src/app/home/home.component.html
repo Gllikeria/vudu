@@ -1,0 +1,109 @@
+<header class="home-nav">
+  <button class="btn btn-primary filter-btn">
+    Filters <i class="fas fa-sort-down"></i>
+  </button>
+  <div class="checkbox-container">
+    <input type="checkbox" name="free" id="checkb" class="nav-checkbox" />
+    <span>Free movies only</span>
+  </div>
+</header>
+<hr />
+<section class="filter">
+  <div
+    class="popular"
+    [ngClass]="activeName === 'popular' ? 'active' : ''"
+    (click)="popularMovies()"
+  >
+    Popular Movies
+  </div>
+  <div
+    class="trending"
+    [ngClass]="activeName === 'trending' ? 'active' : ''"
+    (click)="trendingMovies()"
+  >
+    Trending Movies
+  </div>
+  <div
+    class="search"
+    [ngClass]="activeName === 'search' ? 'active' : ''"
+    (click)="searchBar()"
+  >
+    Search/Search a movie
+  </div>
+</section>
+<main
+  class="main-container"
+  *ngIf="showPopularMovies"
+  infiniteScroll
+  [infiniteScrollDistance]="1"
+  [infiniteScrollThrottle]="150"
+  (scrolled)="onPopularMoviesScroll()"
+  [fromRoot]="true"
+>
+  <div *ngFor="let movie of popularMoviesArr">
+    <img
+      [src]="'https://image.tmdb.org/t/p/w500/' + movie.poster_path"
+      alt=""
+      (click)="movieDetails(movie.id)"
+    />
+  </div>
+</main>
+<main
+  class="main-container"
+  *ngIf="showTrendingMovies"
+  infiniteScroll
+  [infiniteScrollDistance]="1"
+  [infiniteScrollThrottle]="150"
+  (scrolled)="onTrendingMoviesScroll()"
+  [fromRoot]="true"
+>
+  <div *ngFor="let movie of trendingMoviesArr">
+    <img
+      [src]="'https://image.tmdb.org/t/p/w500/' + movie.poster_path"
+      alt=""
+      (click)="movieDetails(movie.id)"
+    />
+  </div>
+</main>
+
+<div class="input-group search-container" *ngIf="showSearchBar">
+  <input
+    #movieName
+    [(ngModel)] = 'searchedMovieName'
+    type="text"
+    class="form-control search-input"
+    placeholder="Search Movie"
+    aria-label="Recipient's username"
+    aria-describedby="basic-addon2"
+    (keyup.enter)="searchMovie()"
+  />
+  <div class="input-group-append">
+    <button class="btn" type="button" >
+      Search
+    </button>
+  </div>
+</div>
+<div *ngIf="searchedMoviesArr.length === 0 && searchResult" class="no-movie">
+
+  <h4>No movies to show</h4>
+</div>
+<main
+  class="main-container"
+  *ngIf="showSeachedMovies"
+  infiniteScroll
+  [infiniteScrollDistance]="1"
+  [infiniteScrollThrottle]="150"
+  (scrolled)="onSearchedMoviesScroll()"
+  [fromRoot]="true"
+>
+  <div *ngFor="let movie of searchedMoviesArr">
+    <img
+      [src]="'https://image.tmdb.org/t/p/w500/' + movie.poster_path"
+      alt=""
+      (click)="movieDetails(movie.id)"
+    />
+  </div>
+</main>
+
+<div class="circle-1"></div>
+<div class="circle-2"></div>

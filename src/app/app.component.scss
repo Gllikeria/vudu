@@ -1,0 +1,40 @@
+.header-nav{
+    height: 50px;
+    background-color: #014d89;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 10%;
+    color: #ffffff;
+    font-weight: 600;
+
+    li{
+        list-style: none;
+        display: inline-block;
+        cursor: pointer;
+    }
+    ul{
+        margin: 0;
+        
+    }
+    .nav-right{
+        text-align: right;
+        width: 50%;
+        li{
+            padding: 15px 0;
+            margin-left: 5%;
+        }
+    }
+    .nav-left{
+        width: 50%;
+        li{
+            padding: 15px 0;
+            margin-right: 5%;
+        }
+        .logo{
+            padding: 10px 0;
+            font-weight: 800;
+            font-size: 1.5rem;
+        }
+    }
+
+}
