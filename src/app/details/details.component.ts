@@ -1,6 +1,7 @@
-import { AfterViewChecked, AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { AfterViewChecked, Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { APIService } from '../api.service';
+
 @Component({
   selector: 'app-details',
   templateUrl: './details.component.html',
@@ -10,6 +11,7 @@ export class DetailsComponent implements OnInit, AfterViewChecked {
 
   constructor(private api:APIService, private activatedRoute:ActivatedRoute) { 
   }
+
   movieId!: string | null;
   movieObj: any;
   castAndCrewObj: any;
