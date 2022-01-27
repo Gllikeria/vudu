@@ -9,13 +9,13 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { NgRatingBarModule } from 'ng-rating-bar';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
-import { FormGroup, FormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    DetailsComponent
+    DetailsComponent,
   ],
   imports: [
     BrowserModule,

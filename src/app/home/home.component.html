@@ -8,65 +8,110 @@
   </div>
 </header>
 <hr />
+<!-- section for 3 tabs -->
 <section class="filter">
   <div
     class="popular"
-    [ngClass]="activeName === 'popular' ? 'active' : ''"
+    [ngClass]="openTab === 'popular' ? 'active' : ''"
     (click)="popularMovies()"
   >
     Popular Movies
   </div>
   <div
     class="trending"
-    [ngClass]="activeName === 'trending' ? 'active' : ''"
+    [ngClass]="openTab === 'trending' ? 'active' : ''"
     (click)="trendingMovies()"
   >
     Trending Movies
   </div>
   <div
     class="search"
-    [ngClass]="activeName === 'search' ? 'active' : ''"
+    [ngClass]="openTab === 'search' ? 'active' : ''"
     (click)="searchBar()"
   >
     Search/Search a movie
   </div>
 </section>
+<!-- popular movies container -->
 <main
   class="main-container"
-  *ngIf="showPopularMovies"
+  *ngIf="openTab === 'popular'"
   infiniteScroll
   [infiniteScrollDistance]="1"
   [infiniteScrollThrottle]="150"
-  (scrolled)="onPopularMoviesScroll()"
+  (scrolled)="popularMovies()"
   [fromRoot]="true"
 >
   <div *ngFor="let movie of popularMoviesArr">
-    <img
+    <!-- wrapper div for hover effects -->
+    <div class="hover_border" >
+      <div class="hever_content" >
+        <div class="average_rate">
+          <!-- რეიტინგი ვარსკვლავებით -->
+          <ng-rating-bar
+          [value]="movie.vote_average / 2"
+          [ratingCount]="5"
+          [disabled]="true"
+          [styles]="{ fontSize: '25px', margin: '5px' }"
+        ></ng-rating-bar>
+        </div>
+        <div class="genres">
+          <p *ngFor="let genre of genresArr">
+            <!-- მარტო პირველ ორ ჟანრს ადისფლეიებს, ამის ლოგიკა ვგრძნობ რო ძაან ცუდად მიწერია :დ -->
+            <span *ngIf="genre.id == movie.genre_ids[0]">{{genre.name}}</span>
+            <span *ngIf="genre.id == movie.genre_ids[1]">{{genre.name}}</span>
+          </p>
+        </div>
+        <div class="view_details" (click)="movieDetails(movie.id)"><p>View Details</p></div>
+      </div>
+      <img
       [src]="'https://image.tmdb.org/t/p/w500/' + movie.poster_path"
       alt=""
-      (click)="movieDetails(movie.id)"
-    />
+      />
+    </div>
   </div>
 </main>
+<!-- ტრენდული ფილმების კონტეინერი -->
 <main
   class="main-container"
-  *ngIf="showTrendingMovies"
+  *ngIf="openTab === 'trending'"
   infiniteScroll
   [infiniteScrollDistance]="1"
   [infiniteScrollThrottle]="150"
-  (scrolled)="onTrendingMoviesScroll()"
+  (scrolled)="trendingMovies()"
   [fromRoot]="true"
 >
-  <div *ngFor="let movie of trendingMoviesArr">
+<!-- ჰავერის ეფექტების ვრაპერი -->
+<div *ngFor="let movie of trendingMoviesArr">
+  <div class="hover_border">
+    <div class="hever_content">
+      <div class="average_rate">
+        <!-- რეიტინგი ვარსკვლავებით -->
+        <ng-rating-bar
+        [value]="movie.vote_average / 2"
+        [ratingCount]="5"
+        [disabled]="true"
+        [styles]="{ fontSize: '25px', margin: '5px' }"
+      ></ng-rating-bar>
+      </div>
+      <div class="genres">
+        <p *ngFor="let genre of genresArr">
+          <span *ngIf="genre.id == movie.genre_ids[0]">{{genre.name}}</span>
+          <span *ngIf="genre.id == movie.genre_ids[1]">{{genre.name}}</span>
+        </p>
+      </div>
+      <div class="view_details" (click)="movieDetails(movie.id)"><p>View Details</p></div>
+    </div>
     <img
-      [src]="'https://image.tmdb.org/t/p/w500/' + movie.poster_path"
-      alt=""
-      (click)="movieDetails(movie.id)"
+    [src]="'https://image.tmdb.org/t/p/w500/' + movie.poster_path"
+    alt=""
+    (click)="movieDetails(movie.id)"
     />
   </div>
+</div>
 </main>
-
-<div class="input-group search-container" *ngIf="showSearchBar">
+<!-- სერჩ ბარის ინფუთი -->
+<div class="input-group search-container" *ngIf="openTab === 'search'">
   <input
     #movieName
     [(ngModel)] = 'searchedMovieName'
@@ -78,32 +123,50 @@
     (keyup.enter)="searchMovie()"
   />
   <div class="input-group-append">
-    <button class="btn" type="button" >
+    <button class="btn" type="button" (click)="searchMovie()">
       Search
     </button>
   </div>
 </div>
-<div *ngIf="searchedMoviesArr.length === 0 && searchResult" class="no-movie">
-
+<!-- როცა ფილმი არ მოიძებნა  -->
+<div class="no-movie" *ngIf="!firstSearch && searchedMoviesArr.length === 0 && pending">
   <h4>No movies to show</h4>
 </div>
+<!-- მოძებნილი ფილმების კონტეინერი -->
 <main
   class="main-container"
   *ngIf="showSeachedMovies"
   infiniteScroll
   [infiniteScrollDistance]="1"
   [infiniteScrollThrottle]="150"
-  (scrolled)="onSearchedMoviesScroll()"
+  (scrolled)="searchMovie()"
   [fromRoot]="true"
 >
-  <div *ngFor="let movie of searchedMoviesArr">
+<div *ngFor="let movie of searchedMoviesArr">
+  <div class="hover_border">
+    <div class="hever_content">
+      <div class="average_rate">
+        <!-- რეიტინგი ვარსკვლავებით -->
+        <ng-rating-bar
+        [value]="movie.vote_average / 2"
+        [ratingCount]="5"
+        [disabled]="true"
+        [styles]="{ fontSize: '25px', margin: '5px' }"
+      ></ng-rating-bar>
+      </div>
+      <div class="genres">
+        <p *ngFor="let genre of genresArr">
+          <span *ngIf="genre.id == movie.genre_ids[0]">{{genre.name}}</span>
+          <span *ngIf="genre.id == movie.genre_ids[1]">{{genre.name}}</span>
+        </p>
+      </div>
+      <div class="view_details" (click)="movieDetails(movie.id)"><p>View Details</p></div>
+    </div>
     <img
-      [src]="'https://image.tmdb.org/t/p/w500/' + movie.poster_path"
-      alt=""
-      (click)="movieDetails(movie.id)"
+    [src]="'https://image.tmdb.org/t/p/w500/' + movie.poster_path"
+    alt=""
+    (click)="movieDetails(movie.id)"
     />
   </div>
+</div>
 </main>
-
-<div class="circle-1"></div>
-<div class="circle-2"></div>
